@@ -1,1 +1,3 @@
-# Neobis_Android_Inventory_App
+# Inventory App
+
+ Приложение, которое позволит магазину отслеживать запасы продуктов.
