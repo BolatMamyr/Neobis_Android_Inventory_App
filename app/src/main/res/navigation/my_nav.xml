@@ -9,10 +9,19 @@
         android:id="@+id/mainFragment"
         android:name="com.example.inventoryapp.fragments.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_addFragment"
+            app:destination="@id/addFragment" />
+    </fragment>
     <fragment
         android:id="@+id/archiveFragment"
         android:name="com.example.inventoryapp.fragments.ArchiveFragment"
         android:label="fragment_archive"
         tools:layout="@layout/fragment_archive" />
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.example.inventoryapp.fragments.AddFragment"
+        android:label="fragment_add"
+        tools:layout="@layout/fragment_add" />
 </navigation>

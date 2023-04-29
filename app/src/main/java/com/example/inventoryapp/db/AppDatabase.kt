@@ -4,23 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import com.example.inventoryapp.model.Shoes
 
 @Database(entities = [Shoes::class], version = 1, exportSchema = false)
-abstract class ShoesDb : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun shoesDao(): ShoesDao
 
     companion object {
-        private var INSTANCE: ShoesDb? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): ShoesDb? {
+        fun getInstance(context: Context): AppDatabase? {
             if (INSTANCE == null) {
-                synchronized(ShoesDb::class) {
+                synchronized(AppDatabase::class) {
                     INSTANCE = Room.databaseBuilder(
                         context = context.applicationContext,
-                        klass = ShoesDb::class.java,
+                        klass = AppDatabase::class.java,
                         "shoes.db"
                     ).build()
                 }

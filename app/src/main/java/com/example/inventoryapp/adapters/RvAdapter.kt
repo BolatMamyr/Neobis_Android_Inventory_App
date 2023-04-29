@@ -32,6 +32,8 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
             txtBrand.text = item.brand
             val price = String.format("$ %.2f", item.price)
             txtPrice.text = price
+            val quantity = "${item.quantity} ${holder.itemView.resources.getString(R.string.pieces)}"
+            txtQuantity.text = quantity
 
             Glide.with(holder.itemView.context)
                 .load(item.imgId)
