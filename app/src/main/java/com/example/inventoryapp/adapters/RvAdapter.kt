@@ -12,6 +12,7 @@ import com.example.inventoryapp.model.Shoes
 class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
 
     private var list = emptyList<Shoes>()
+    var onItemClick: ((Shoes) -> Unit)? = null
 
     inner class MyViewHolder(val binding: ItemRecyclerviewBinding)
         : RecyclerView.ViewHolder(binding.root)
@@ -36,9 +37,11 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
             txtQuantity.text = quantity
 
             Glide.with(holder.itemView.context)
-                .load(item.imgId)
+                .load(item.imgUri)
+                .placeholder(holder.itemView.context.getDrawable(R.drawable.placeholder))
                 .into(img)
         }
+        holder.itemView.setOnClickListener { onItemClick?.invoke(list[position]) }
     }
 
     override fun getItemCount(): Int = list.size

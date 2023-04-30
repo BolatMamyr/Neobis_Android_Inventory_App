@@ -1,23 +1,29 @@
 package com.example.inventoryapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inventoryapp.R
 import com.example.inventoryapp.adapters.RvAdapter
 import com.example.inventoryapp.databinding.FragmentMainBinding
+import com.example.inventoryapp.db.AppDatabase
 import com.example.inventoryapp.model.Shoes
+import com.example.inventoryapp.presenter.Contract
+import com.example.inventoryapp.presenter.ShoesPresenter
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), Contract.ShoesView {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    val mAdapter by lazy { RvAdapter() }
+    private val mAdapter by lazy { RvAdapter() }
+    private lateinit var presenter: ShoesPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,11 +36,18 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRv()
-        getData()
-        addItem()
+//        getData()
+        setOnFloatingButtonListener()
+        initPresenter()
     }
 
-    private fun addItem() {
+    private fun initPresenter() {
+        val db = AppDatabase.getInstance(requireContext())
+        presenter = ShoesPresenter(db!!.shoesDao())
+        presenter.attachView(this)
+        presenter.getAllShoes()
+    }
+    private fun setOnFloatingButtonListener() {
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_addFragment)
         }
@@ -46,46 +59,22 @@ class MainFragment : Fragment() {
             layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
             isSaveEnabled = true
         }
+        mAdapter.onItemClick = {
+            val action = MainFragmentDirections.actionMainFragmentToEditFragment(it)
+            findNavController().navigate(action)
+        }
     }
 
-    private fun getData() {
-        val list = listOf(
-            Shoes(
-                name = "Air Jordan",
-                brand = "Nike",
-                price = 1500.0,
-                quantity = 105,
-                imgId = R.drawable.air_jordan
-            ),
-            Shoes(
-                name = "Jordan Max Aura",
-                brand = "Nike",
-                price = 1500.0,
-                quantity = 105,
-                imgId = R.drawable.jordan_max_aura
-            ),
-            Shoes(
-                name = "Air Jordan 4 Retro",
-                brand = "Nike",
-                price = 1500.0,
-                quantity = 105,
-                imgId = R.drawable.img
-            ),
-            Shoes(
-                name = "Yeezy 350",
-                brand = "adidas",
-                price = 1500.0,
-                quantity = 105,
-                imgId = R.drawable.img_2
-            ),
-            Shoes(
-                name = "Yeezy 700",
-                brand = "adidas",
-                price = 1500.0,
-                quantity = 105,
-                imgId = R.drawable.img_3
-            ),
-        )
-        mAdapter.updateData(list)
+    override fun showShoes(shoes: List<Shoes>) {
+        mAdapter.updateData(shoes)
+    }
+
+    override fun showError(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detachView()
     }
 }

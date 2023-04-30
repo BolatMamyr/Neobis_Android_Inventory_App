@@ -14,4 +14,18 @@
     </string>
     <string name="search">Поиск</string>
     <string name="pieces">шт</string>
+    <string name="add_item">Добавить товар</string>
+    <string name="item_name">Наименование товара</string>
+    <string name="hint_item_name">Впишите название товара</string>
+    <string name="item_price">Цена товара</string>
+    <string name="hint_item_price">Впишите цену товара</string>
+    <string name="item_manufacturer">Производитель товара</string>
+    <string name="hint_brand">Название производителя товара</string>
+    <string name="item_quantity">Количество товара</string>
+    <string name="hint_quantity">Количество товара</string>
+    <string name="cancel">Отмена</string>
+    <string name="add">Добавить</string>
+    <string name="item_image">Item image</string>
+    <string name="error_fill_fields">Пожалуиста, заполните все поля!</string>
+    <string name="item_details">Детали о товаре</string>
 </resources>

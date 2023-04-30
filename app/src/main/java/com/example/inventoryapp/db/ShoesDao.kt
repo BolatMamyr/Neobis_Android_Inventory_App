@@ -6,10 +6,10 @@ import com.example.inventoryapp.model.Shoes
 @Dao
 interface ShoesDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertShoes(shoes: Shoes)
 
-    @Query("SELECT * FROM shoes_table")
+    @Query("SELECT * FROM $TABLE_NAME")
     fun getAllShoes(): List<Shoes>
 
     @Update
@@ -17,4 +17,8 @@ interface ShoesDao {
 
     @Delete
     fun deleteShoes(shoes: Shoes)
+
+    companion object {
+        const val TABLE_NAME = "shoes_table"
+    }
 }

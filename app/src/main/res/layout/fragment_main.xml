@@ -33,7 +33,7 @@
             android:hint="@string/search"
             android:paddingLeft="13.5dp"
             android:textStyle="bold"
-            android:textColorHint="@color/et_hint" />
+            android:textColorHint="@color/grey" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

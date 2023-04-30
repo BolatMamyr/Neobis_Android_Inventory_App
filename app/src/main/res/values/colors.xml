@@ -10,7 +10,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="selected_menu">#FF5151</color>
     <color name="searchbar">#F9F9F9</color>
-    <color name="et_hint">#A6A7A7</color>
+    <color name="grey">#A6A7A7</color>
     <color name="sky_blue">#75B4FE</color>
-    <color name="grey">#ADAEAE</color>
+    <color name="light_grey">#ADAEAE</color>
+    <color name="et_background">#F3F3F4</color>
+    <color name="et_hint">#C7CBCB</color>
+    <color name="btn_blue">#2A8CFF</color>
 </resources>

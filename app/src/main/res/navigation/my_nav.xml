@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainFragment_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_editFragment"
+            app:destination="@id/editFragment" />
     </fragment>
     <fragment
         android:id="@+id/archiveFragment"
@@ -24,4 +27,13 @@
         android:name="com.example.inventoryapp.fragments.AddFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" />
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.example.inventoryapp.fragments.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" >
+        <argument
+            android:name="shoes"
+            app:argType="com.example.inventoryapp.model.Shoes" />
+    </fragment>
 </navigation>
