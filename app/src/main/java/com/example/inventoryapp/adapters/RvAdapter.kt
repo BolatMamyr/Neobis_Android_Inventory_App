@@ -37,7 +37,7 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
             txtQuantity.text = quantity
 
             Glide.with(holder.itemView.context)
-                .load(item.imgUri)
+                .load(item.image)
                 .placeholder(holder.itemView.context.getDrawable(R.drawable.placeholder))
                 .into(img)
         }

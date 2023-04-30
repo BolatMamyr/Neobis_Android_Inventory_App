@@ -1,5 +1,6 @@
 package com.example.inventoryapp.fragments
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,14 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.drawToBitmap
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.inventoryapp.R
 import com.example.inventoryapp.databinding.FragmentAddBinding
-import com.example.inventoryapp.db.AppDatabase
+import com.example.inventoryapp.db.Converters
 import com.example.inventoryapp.model.Shoes
 import com.example.inventoryapp.presenter.Contract
 import com.example.inventoryapp.presenter.ShoesPresenter
+import com.example.inventoryapp.util.MyUtils
+import com.example.inventoryapp.util.MyUtils.Companion.toast
 
 class AddFragment : Fragment(), Contract.ShoesView {
 
@@ -42,8 +46,7 @@ class AddFragment : Fragment(), Contract.ShoesView {
     }
 
     private fun init() {
-        val db = AppDatabase.getInstance(requireContext())
-        presenter = ShoesPresenter(db!!.shoesDao())
+        presenter = ShoesPresenter(requireContext())
         presenter.attachView(this)
     }
 
@@ -81,9 +84,10 @@ class AddFragment : Fragment(), Contract.ShoesView {
                         price = price,
                         brand = brand,
                         quantity = quantity,
-                        imgUri = imgUri.toString()
+                        image = imgAdd.drawToBitmap()
                     )
                     presenter.addShoes(shoes)
+                    MyUtils.toast(requireContext(), getString(R.string.item_added))
                     findNavController().navigateUp()
                 }
 

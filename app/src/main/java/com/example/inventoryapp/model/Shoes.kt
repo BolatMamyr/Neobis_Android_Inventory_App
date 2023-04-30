@@ -1,14 +1,14 @@
 package com.example.inventoryapp.model
 
-import android.net.Uri
+import android.graphics.Bitmap
 import android.os.Parcelable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.example.inventoryapp.db.Converters
 import com.example.inventoryapp.db.ShoesDao
 import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = ShoesDao.TABLE_NAME)
+@TypeConverters(Converters::class)
 @Parcelize
 data class Shoes(
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
@@ -16,5 +16,5 @@ data class Shoes(
     val brand: String,
     val price: Double,
     val quantity: Int,
-    @ColumnInfo(name = "image") val imgUri: String? = null
+    val image: Bitmap? = null
 ): Parcelable

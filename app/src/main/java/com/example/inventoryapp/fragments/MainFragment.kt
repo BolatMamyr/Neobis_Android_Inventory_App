@@ -1,7 +1,6 @@
 package com.example.inventoryapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.inventoryapp.R
 import com.example.inventoryapp.adapters.RvAdapter
 import com.example.inventoryapp.databinding.FragmentMainBinding
-import com.example.inventoryapp.db.AppDatabase
 import com.example.inventoryapp.model.Shoes
 import com.example.inventoryapp.presenter.Contract
 import com.example.inventoryapp.presenter.ShoesPresenter
@@ -36,14 +34,12 @@ class MainFragment : Fragment(), Contract.ShoesView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRv()
-//        getData()
         setOnFloatingButtonListener()
-        initPresenter()
+        getShoes()
     }
 
-    private fun initPresenter() {
-        val db = AppDatabase.getInstance(requireContext())
-        presenter = ShoesPresenter(db!!.shoesDao())
+    private fun getShoes() {
+        presenter = ShoesPresenter(requireContext())
         presenter.attachView(this)
         presenter.getAllShoes()
     }
