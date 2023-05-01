@@ -73,4 +73,9 @@ class MainFragment : Fragment(), Contract.ShoesView {
         super.onDestroy()
         presenter.detachView()
     }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.getAllShoes()
+    }
 }

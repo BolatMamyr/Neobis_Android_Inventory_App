@@ -20,6 +20,7 @@ import com.example.inventoryapp.presenter.Contract
 import com.example.inventoryapp.presenter.ShoesPresenter
 import com.example.inventoryapp.util.MyUtils
 import com.example.inventoryapp.util.MyUtils.Companion.toast
+import com.example.inventoryapp.util.showError
 
 class AddFragment : Fragment(), Contract.ShoesView {
 
@@ -54,18 +55,13 @@ class AddFragment : Fragment(), Contract.ShoesView {
         binding.apply {
             btnAddItem.setOnClickListener {
                 if (etItemName.text.isNullOrBlank()) {
-                    etItemName.error = getString(R.string.error_fill_fields)
-                    etItemName.clearFocus()
+                    etItemName.showError()
                 } else if (etItemPrice.text.isNullOrBlank()) {
-                    etItemPrice.error = getString(R.string.error_fill_fields)
-                    etItemPrice.clearFocus()
-                }else if (etItemBrand.text.isNullOrBlank()) {
-                    etItemBrand.error = getString(R.string.error_fill_fields)
-                    etItemBrand.clearFocus()
-                }
-                else if (etItemQuantity.text.isNullOrBlank()) {
-                    etItemQuantity.error = getString(R.string.error_fill_fields)
-                    etItemQuantity.clearFocus()
+                    etItemPrice.showError()
+                } else if (etItemBrand.text.isNullOrBlank()) {
+                    etItemBrand.showError()
+                } else if (etItemQuantity.text.isNullOrBlank()) {
+                    etItemQuantity.showError()
                 } else {
                     val name = etItemName.text.toString().trim()
                     val price = try {

@@ -8,6 +8,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.inventoryapp.databinding.ActivityMainBinding
 
+// TODO: When app is re-shown , it throws to MainFragment from AddFragment and EditFragment
+// TODO: Add Archive
+// TODO: Add taking picture
+// TODO: Add saving state for AddFragment image. If image is selected and when user tries to reselect another img and doesn't actually choose anything and goes back it removes prev img
+// TODO: MVP - should I use diff ViewContracts and Presenter for each Frag? For ex: In EditFrag there is a func getAllShoes() coz its extended from ShoesView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

@@ -11,8 +11,9 @@ interface Contract {
 
     interface Presenter {
         fun addShoes(shoes: Shoes)
+        fun getAllShoes()
+        fun updateShoes(shoes: Shoes)
         fun attachView(view: ShoesView)
         fun detachView()
-        fun getAllShoes()
     }
 }

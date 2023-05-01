@@ -2,7 +2,6 @@ package com.example.inventoryapp.presenter
 
 import android.content.Context
 import com.example.inventoryapp.db.AppDatabase
-import com.example.inventoryapp.db.ShoesDao
 import com.example.inventoryapp.model.Shoes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +37,16 @@ class ShoesPresenter(private val context: Context) : Contract.Presenter {
                 withContext(Dispatchers.Main) {
                     view?.showShoes(shoes)
                 }
+            }
+        } catch (e: Exception) {
+            view?.showError(e.message ?: "Unknown Error")
+        }
+    }
+
+    override fun updateShoes(shoes: Shoes) {
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                shoesDao.updateShoes(shoes)
             }
         } catch (e: Exception) {
             view?.showError(e.message ?: "Unknown Error")
