@@ -1,6 +1,6 @@
 package com.example.inventoryapp.fragments
 
-import android.graphics.Bitmap
+import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,18 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.core.view.drawToBitmap
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
+import com.example.inventoryapp.BuildConfig
 import com.example.inventoryapp.R
 import com.example.inventoryapp.databinding.FragmentAddBinding
-import com.example.inventoryapp.db.Converters
 import com.example.inventoryapp.model.Shoes
 import com.example.inventoryapp.presenter.Contract
 import com.example.inventoryapp.presenter.ShoesPresenter
 import com.example.inventoryapp.util.MyUtils
-import com.example.inventoryapp.util.MyUtils.Companion.toast
 import com.example.inventoryapp.util.showError
+import java.io.File
 
 class AddFragment : Fragment(), Contract.ShoesView {
 
@@ -29,6 +30,22 @@ class AddFragment : Fragment(), Contract.ShoesView {
 
     private lateinit var presenter: ShoesPresenter
     private var imgUri: Uri? = null
+
+    private val takeImageResult =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+            if (isSuccess) {
+                imgUri?.let { uri ->
+                    binding.imgAdd.setImageURI(uri)
+                }
+            }
+        }
+
+    private val selectImageResult =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                binding.imgAdd.setImageURI(uri)
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,19 +108,49 @@ class AddFragment : Fragment(), Contract.ShoesView {
         }
     }
 
+    // Chooses Camera or Gallery in AlertDialog and launches appropriate one
     private fun getImage() {
-        val getContent =
-            registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-                Glide.with(requireContext())
-                    .load(uri)
-                    .placeholder(resources.getDrawable(R.drawable.placeholder, null))
-                    .into(binding.imgAdd)
-
-                imgUri = uri
-            }
-        binding.imgAdd.setOnClickListener {
-            getContent.launch(IMG_MIME_TYPE)
+        val dialog = AlertDialog.Builder(requireContext())
+        dialog.setTitle("Выберите источник картины")
+        dialog.setMessage("Вы хотите сделать новое фото или выбрать из галереи?")
+        dialog.setPositiveButton("Камера") { dialog, which ->
+            takeImage()
         }
+        dialog.setNegativeButton("Галерея") { dialog, which ->
+            selectImageResult.launch(IMG_MIME_TYPE)
+        }
+        dialog.create()
+
+        binding.imgAdd.setOnClickListener {
+            dialog.show()
+        }
+    }
+
+    private fun takeImage() {
+        lifecycleScope.launchWhenStarted {
+            getImgUri().let { uri ->
+                imgUri = uri
+                takeImageResult.launch(uri)
+            }
+        }
+    }
+
+    private fun getImgUri(): Uri {
+        val tmpFile =
+            File.createTempFile(
+                "tmp_image_file",
+                ".png",
+                requireActivity().cacheDir
+            ).apply {
+                createNewFile()
+                deleteOnExit()
+            }
+
+        return FileProvider.getUriForFile(
+            requireContext().applicationContext,
+            "${BuildConfig.APPLICATION_ID}.provider",
+            tmpFile
+            )
     }
 
     private fun setNavigationListener() {
