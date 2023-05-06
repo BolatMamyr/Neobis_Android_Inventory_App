@@ -1,6 +1,7 @@
 package com.example.inventoryapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,14 @@ class MainFragment : Fragment(), Contract.ShoesView {
         setupRv()
         setOnFloatingButtonListener()
         getShoes()
+        archive()
+    }
+
+    private fun archive() {
+        mAdapter.onClickShowMore = {
+            val action = MainFragmentDirections.actionMainFragmentToBottomSheetArchiveFragment(it)
+            findNavController().navigate(action)
+        }
     }
 
     private fun getShoes() {
@@ -56,6 +65,7 @@ class MainFragment : Fragment(), Contract.ShoesView {
             isSaveEnabled = true
         }
         mAdapter.onItemClick = {
+            Log.d("MyLog", "MainFragment: shoes to pass ID = ${it.id}")
             val action = MainFragmentDirections.actionMainFragmentToEditFragment(it)
             findNavController().navigate(action)
         }

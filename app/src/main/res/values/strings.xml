@@ -31,4 +31,5 @@
     <string name="item_added">Товар добавлен</string>
     <string name="item_updated">Товар обновлен</string>
     <string name="edit">Изменить</string>
+    <string name="to_archive">Архивировать</string>
 </resources>

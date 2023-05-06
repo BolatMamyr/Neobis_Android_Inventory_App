@@ -1,6 +1,7 @@
 package com.example.inventoryapp.presenter
 
 import android.content.Context
+import android.util.Log
 import com.example.inventoryapp.db.AppDatabase
 import com.example.inventoryapp.model.Shoes
 import kotlinx.coroutines.CoroutineScope
@@ -46,9 +47,11 @@ class ShoesPresenter(private val context: Context) : Contract.Presenter {
     override fun updateShoes(shoes: Shoes) {
         try {
             CoroutineScope(Dispatchers.IO).launch {
+                Log.d("MyLog", "ShoesPresenter: updateShoes")
                 shoesDao.updateShoes(shoes)
             }
         } catch (e: Exception) {
+            Log.d("MyLog", "ShoesPresenter: updateShoes ERROR")
             view?.showError(e.message ?: "Unknown Error")
         }
     }

@@ -44,6 +44,7 @@ class AddFragment : Fragment(), Contract.ShoesView {
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
                 binding.imgAdd.setImageURI(uri)
+                imgUri = uri
             }
         }
 
@@ -97,7 +98,7 @@ class AddFragment : Fragment(), Contract.ShoesView {
                         price = price,
                         brand = brand,
                         quantity = quantity,
-                        image = imgAdd.drawToBitmap()
+                        image = imgUri.toString()
                     )
                     presenter.addShoes(shoes)
                     MyUtils.toast(requireContext(), getString(R.string.item_added))
@@ -110,16 +111,17 @@ class AddFragment : Fragment(), Contract.ShoesView {
 
     // Chooses Camera or Gallery in AlertDialog and launches appropriate one
     private fun getImage() {
-        val dialog = AlertDialog.Builder(requireContext())
-        dialog.setTitle("Выберите источник картины")
-        dialog.setMessage("Вы хотите сделать новое фото или выбрать из галереи?")
-        dialog.setPositiveButton("Камера") { dialog, which ->
-            takeImage()
+        val dialog = AlertDialog.Builder(requireContext()).apply {
+            setTitle("Выберите источник картины")
+            setMessage("Вы хотите сделать новое фото или выбрать из галереи?")
+            setPositiveButton("Камера") { dialog, which ->
+                takeImage()
+            }
+            setNegativeButton("Галерея") { dialog, which ->
+                selectImageResult.launch(IMG_MIME_TYPE)
+            }
+            create()
         }
-        dialog.setNegativeButton("Галерея") { dialog, which ->
-            selectImageResult.launch(IMG_MIME_TYPE)
-        }
-        dialog.create()
 
         binding.imgAdd.setOnClickListener {
             dialog.show()

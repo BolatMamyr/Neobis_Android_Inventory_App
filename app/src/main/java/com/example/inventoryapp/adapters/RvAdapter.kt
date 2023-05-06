@@ -13,6 +13,7 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
 
     private var list = emptyList<Shoes>()
     var onItemClick: ((Shoes) -> Unit)? = null
+    var onClickShowMore: ((Shoes) -> Unit)? = null
 
     inner class MyViewHolder(val binding: ItemRecyclerviewBinding)
         : RecyclerView.ViewHolder(binding.root)
@@ -42,12 +43,13 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
                 .into(img)
         }
         holder.itemView.setOnClickListener { onItemClick?.invoke(list[position]) }
+        holder.binding.btnMore.setOnClickListener { onClickShowMore?.invoke(list[position]) }
     }
 
     override fun getItemCount(): Int = list.size
 
     fun updateData(newList: List<Shoes>) {
-        var oldList = list
+        val oldList = list
         val diffResult = DiffUtil.calculateDiff(MyDiffCallback(oldList, newList))
         list = newList
         diffResult.dispatchUpdatesTo(this)
@@ -62,7 +64,7 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
         override fun getNewListSize(): Int = newList.size
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].name == newList[newItemPosition].name
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
