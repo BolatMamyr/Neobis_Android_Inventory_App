@@ -5,12 +5,14 @@ import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.inventoryapp.model.ArchivedShoes
 import com.example.inventoryapp.model.Shoes
 
-@Database(entities = [Shoes::class], version = 1, exportSchema = false)
+@Database(entities = [Shoes::class, ArchivedShoes::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun shoesDao(): ShoesDao
+    abstract fun archivedShoesDao(): ArchivedShoesDao
 
     companion object {
         private var INSTANCE: AppDatabase? = null
@@ -25,7 +27,6 @@ abstract class AppDatabase : RoomDatabase() {
                     ).build()
                 }
             }
-            Log.d("MyLog", "DB inst = $INSTANCE")
             return INSTANCE
         }
 

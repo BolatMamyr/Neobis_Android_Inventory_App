@@ -17,7 +17,7 @@ import com.example.inventoryapp.model.Shoes
 import com.example.inventoryapp.presenter.Contract
 import com.example.inventoryapp.presenter.ShoesPresenter
 
-class MainFragment : Fragment(), Contract.ShoesView {
+class MainFragment : Fragment(), Contract.ShoesListView {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!

@@ -1,13 +1,14 @@
 package com.example.inventoryapp.model
 
 import android.os.Parcelable
-import androidx.room.*
-import com.example.inventoryapp.db.ShoesDao
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.inventoryapp.db.ArchivedShoesDao
 import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = ShoesDao.TABLE_NAME)
+@Entity(tableName = ArchivedShoesDao.TABLE_NAME)
 @Parcelize
-data class Shoes(
+class ArchivedShoes(
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
     var name: String,
     var brand: String,

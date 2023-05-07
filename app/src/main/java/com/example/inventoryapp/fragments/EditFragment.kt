@@ -155,10 +155,6 @@ class EditFragment : Fragment(), Contract.ShoesView {
         }
     }
 
-    override fun showShoes(shoes: List<Shoes>) {
-
-    }
-
     override fun showError(message: String) {
         MyUtils.toast(requireContext(), message)
     }

@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import androidx.core.view.drawToBitmap
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.inventoryapp.BuildConfig
@@ -159,10 +158,6 @@ class AddFragment : Fragment(), Contract.ShoesView {
         binding.tbAdd.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
-    }
-
-    override fun showShoes(shoes: List<Shoes>) {
-
     }
 
     override fun showError(message: String) {
