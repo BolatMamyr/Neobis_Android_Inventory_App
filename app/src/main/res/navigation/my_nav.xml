@@ -24,7 +24,17 @@
         android:id="@+id/archiveFragment"
         android:name="com.example.inventoryapp.fragments.ArchiveFragment"
         android:label="fragment_archive"
-        tools:layout="@layout/fragment_archive" />
+        tools:layout="@layout/fragment_archive" >
+        <action
+            android:id="@+id/action_archiveFragment_to_bottomSheetUnarchiveFragment"
+            app:destination="@id/bottomSheetUnarchiveFragment" />
+        <action
+            android:id="@+id/action_archiveFragment_to_addFragment"
+            app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_archiveFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.inventoryapp.fragments.AddFragment"
@@ -44,6 +54,15 @@
         android:name="com.example.inventoryapp.fragments.BottomSheetArchiveFragment"
         android:label="fragment_bottom_sheet_archive"
         tools:layout="@layout/fragment_bottom_sheet_archive" >
+        <argument
+            android:name="shoes"
+            app:argType="com.example.inventoryapp.model.Shoes" />
+    </dialog>
+    <dialog
+        android:id="@+id/bottomSheetUnarchiveFragment"
+        android:name="com.example.inventoryapp.fragments.BottomSheetUnarchiveFragment"
+        android:label="fragment_bottom_sheet_unarchive"
+        tools:layout="@layout/fragment_bottom_sheet_unarchive" >
         <argument
             android:name="shoes"
             app:argType="com.example.inventoryapp.model.Shoes" />

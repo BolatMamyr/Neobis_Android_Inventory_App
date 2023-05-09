@@ -12,6 +12,10 @@ interface Contract {
         fun showShoes(shoes: List<Shoes>)
     }
 
+    interface ArchivedShoesListView : ViewContract {
+        fun showShoes(shoes: List<Shoes>)
+    }
+
     interface ShoesView : ViewContract
 
     interface Presenter {
@@ -21,5 +25,10 @@ interface Contract {
         fun attachView(view: ViewContract)
         fun detachView()
         fun archive(shoes: Shoes)
+        fun getArchivedShoes()
+        fun unarchive(shoes: Shoes)
+        fun delete(shoes: Shoes)
+        fun search(query: String)
+        fun searchArchived(query: String)
     }
 }

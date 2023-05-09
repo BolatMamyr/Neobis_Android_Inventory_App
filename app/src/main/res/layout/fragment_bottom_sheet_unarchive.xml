@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".fragments.BottomSheetUnarchiveFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="60dp"
+            android:layout_height="4dp"
+            android:background="@drawable/grey_line"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/btn_restore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/to_restore"
+            android:textAllCaps="false"
+            android:textAlignment="textStart"
+            android:textColor="@color/primary"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/to_delete"
+            android:textAllCaps="false"
+            android:textAlignment="textStart"
+            android:textColor="@color/primary"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="20dp"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

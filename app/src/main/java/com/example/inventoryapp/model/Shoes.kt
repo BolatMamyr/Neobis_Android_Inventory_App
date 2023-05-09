@@ -14,5 +14,6 @@ data class Shoes(
     var price: Double,
     var quantity: Int,
     var image: String? = null,
-    var archived: Boolean = false
+    // 0 - false, 1 - true
+    var archived: Int = 0
 ): Parcelable

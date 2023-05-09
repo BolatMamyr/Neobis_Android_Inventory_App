@@ -68,6 +68,11 @@ class EditFragment : Fragment(), Contract.ShoesView {
         getAndSetInfo()
         showDialogForImage()
         editShoes()
+        cancelChanges()
+    }
+
+    private fun cancelChanges() {
+        binding.btnEditCancel.setOnClickListener { findNavController().navigateUp() }
     }
 
     private fun showDialogForImage() {

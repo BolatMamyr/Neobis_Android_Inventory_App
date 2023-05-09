@@ -1,5 +1,6 @@
 package com.example.inventoryapp.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -12,11 +13,11 @@ import com.example.inventoryapp.model.Shoes
 class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
 
     private var list = emptyList<Shoes>()
-    var onItemClick: ((Shoes) -> Unit)? = null
-    var onClickShowMore: ((Shoes) -> Unit)? = null
+    var onItemClick: ((Shoes?) -> Unit)? = null
+    var onClickShowMore: ((Shoes?) -> Unit)? = null
 
-    inner class MyViewHolder(val binding: ItemRecyclerviewBinding)
-        : RecyclerView.ViewHolder(binding.root)
+    inner class MyViewHolder(val binding: ItemRecyclerviewBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemRecyclerviewBinding.inflate(
@@ -34,7 +35,8 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
             txtBrand.text = item.brand
             val price = String.format("$ %.2f", item.price)
             txtPrice.text = price
-            val quantity = "${item.quantity} ${holder.itemView.resources.getString(R.string.pieces)}"
+            val quantity =
+                "${item.quantity} ${holder.itemView.resources.getString(R.string.pieces)}"
             txtQuantity.text = quantity
 
             Glide.with(holder.itemView.context)
@@ -42,11 +44,20 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
                 .placeholder(holder.itemView.context.getDrawable(R.drawable.placeholder))
                 .into(img)
         }
+        Log.d("MyLog", "RvAdapter: list size = ${list.size}")
         holder.itemView.setOnClickListener { onItemClick?.invoke(list[position]) }
-        holder.binding.btnMore.setOnClickListener { onClickShowMore?.invoke(list[position]) }
+
+        list[position].let { shoes ->
+            holder.binding.btnMore.setOnClickListener {
+                onClickShowMore?.invoke(shoes)
+            }
+        }
+
     }
 
     override fun getItemCount(): Int = list.size
+
+    fun getListSize() = list.size
 
     fun updateData(newList: List<Shoes>) {
         val oldList = list
@@ -56,8 +67,8 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.MyViewHolder>() {
     }
 
     private class MyDiffCallback(
-    var oldList: List<Shoes>,
-    var newList: List<Shoes>
+        var oldList: List<Shoes>,
+        var newList: List<Shoes>
     ) : DiffUtil.Callback() {
         override fun getOldListSize(): Int = oldList.size
 

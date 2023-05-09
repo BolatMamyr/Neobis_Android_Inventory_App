@@ -32,4 +32,6 @@
     <string name="item_updated">Товар обновлен</string>
     <string name="edit">Изменить</string>
     <string name="to_archive">Архивировать</string>
+    <string name="to_restore">Восcтановить</string>
+    <string name="to_delete">Удалить</string>
 </resources>

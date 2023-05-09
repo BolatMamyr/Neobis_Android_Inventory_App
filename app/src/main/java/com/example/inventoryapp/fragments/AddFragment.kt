@@ -61,6 +61,11 @@ class AddFragment : Fragment(), Contract.ShoesView {
         setNavigationListener()
         getImage()
         addShoes()
+        cancelChanges()
+    }
+
+    private fun cancelChanges() {
+        binding.btnCancel.setOnClickListener { findNavController().navigateUp() }
     }
 
     private fun init() {
@@ -101,7 +106,10 @@ class AddFragment : Fragment(), Contract.ShoesView {
                     )
                     presenter.addShoes(shoes)
                     MyUtils.toast(requireContext(), getString(R.string.item_added))
-                    findNavController().navigateUp()
+                    findNavController().apply {
+                        popBackStack(R.id.archiveFragment, false)
+                        navigate(R.id.mainFragment)
+                    }
                 }
 
             }

@@ -37,7 +37,7 @@ class BottomSheetArchiveFragment : BottomSheetDialogFragment() {
             AlertDialog.Builder(requireContext()).apply {
                 setTitle("Архивировать ${shoes.name} из каталога?")
                 setPositiveButton("Да") { _, _ ->
-                    shoes.archived = true
+                    shoes.archived = 1
                     presenter.archive(shoes)
                 }
                 setNegativeButton("Нет") { _, _ ->
